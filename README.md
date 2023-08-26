@@ -45,13 +45,12 @@ Once you do this for all the chats you want to fine-tune on, the main process is
 
 You can always refer to the `chats_example` folder if you want to try fine-tuning without collecting your own chat files, or just want to see an example of a bit of "polishing". I honestly don't know if I should include the RP prompt in the examples or not, this requires much more experimentation.
 
-Once all this is done, you can star the actual fine-tune.
-First, run a check on your dataset:
+After the dataset collecting is done, we can check our dataset for errors:
 ```
 python main.py check
 ```
 
-This will run some basic sanity checks, like properly-formatted entries, roles. It will also run all of your messages through the Moderation API to ensure that none of the messages will trip the safety checks in the fine-tune process.
+This will run some basic sanity checks - checking for properly formatted messages, presence of roles. It will also run all of your messages through the Moderation API to ensure that none of the messages will trip the safety checks in the fine-tune process.
 
 Once that is done and everything's fine, you can run:
 ```
