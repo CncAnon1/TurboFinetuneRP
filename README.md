@@ -19,8 +19,8 @@ The dataset has to contain at least 10 chat example (user/assistant messages), m
 
 Let's start. First of all, install Python, clone the repo, and install all requirements. This assumes a Linux environment, but should work on Windows too.
 ```
-git clone https://github.com/CncAnon1/turbo_ft
-cd turbo_ft
+git clone https://github.com/CncAnon1/TurboFinetuneRP
+cd TurboFinetuneRP
 pip install -r requirements.txt
 ```
 
