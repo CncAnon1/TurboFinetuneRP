@@ -80,5 +80,3 @@ That should be all, enjoy using your fine-tune!
 
 Some notes:
 1) There's a `n_epochs` option in the config - it controls how many times the fine-tune will "show" the model your dataset. I think 20 should be a good option for small datasets, but if you have a bigger dataset, you might want to lower this value.
-
--> CncAnon, 2023 ->
