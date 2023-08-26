@@ -2,17 +2,17 @@
 
 This will be a somewhat straightforward write-up on how to fine-tune Turbo to be better at roleplay.
 Some limitations and warnings first:
-1) Right now you can only fine-tune `gpt-3.5-turbo` (`gpt-3.5-turbo-0613` specifically) which has 4K context. OAI said they have plans to allow fine-tuning GPT-4, but that'd probably cost a lot.
-2) The cost of fine-tuning itself is quite low ($0.008 for 1K tokens of the dataset), but the main problem is the inference cost - because the fine-tuned model will be only used by you, the inference will cost 8 times more compared to normal 4K Turbo, which makes it almost half as expensive as GPT-4.
-3) The fine-tune model cannot be shared between different OpenAI accounts, so the only way to have the "same" fine-tune is to run the fine-tune job on  all the separate accounts you want to use. I doubt it'll actually be 100% the same due to all the small inaccuracies (like how Turbo at temp=0 can behave differently), but should be close enough.
-4) The dataset for the fine-tune has to be 100% SFW, because, to quote OpenAI - ["fine-tuning training data is passed through our Moderation API and a GPT-4 powered moderation system to detect unsafe training data that conflict with our safety standards"](https://openai.com/blog/gpt-3-5-turbo-fine-tuning-and-api-updates). The Moderation API is quite strict, so even things like "sucking on a finger" won't pass. Thankfully, my script already does safety checks so your dataset is unlikely to get flagged after upload.
-5) The owner of the account will get an email when a fine-tune finishes. Of course this won't affect normal, legitimate users, but it's just a good thing to keep in mind ;)
+- Right now you can only fine-tune `gpt-3.5-turbo` (`gpt-3.5-turbo-0613` specifically) which has 4K context. OAI said they have plans to allow fine-tuning GPT-4, but that'd probably cost a lot.
+- The cost of fine-tuning itself is quite low ($0.008 for 1K tokens of the dataset), but the main problem is the inference cost - because the fine-tuned model will be only used by you, the inference will cost 8 times more compared to normal 4K Turbo, which makes it almost half as expensive as GPT-4.
+- The fine-tune model cannot be shared between different OpenAI accounts, so the only way to have the "same" fine-tune is to run the fine-tune job on  all the separate accounts you want to use. I doubt it'll actually be 100% the same due to all the small inaccuracies (like how Turbo at temp=0 can behave differently), but should be close enough.
+- The dataset for the fine-tune has to be 100% SFW, because, to quote OpenAI - ["fine-tuning training data is passed through our Moderation API and a GPT-4 powered moderation system to detect unsafe training data that conflict with our safety standards"](https://openai.com/blog/gpt-3-5-turbo-fine-tuning-and-api-updates). The Moderation API is quite strict, so even things like "sucking on a finger" won't pass. Thankfully, my script already does safety checks so your dataset is unlikely to get flagged after upload.
+- The owner of the account will get an email when a fine-tune finishes. Of course this won't affect normal, legitimate users, but it's just a good thing to keep in mind ;)
 
 The fine-tune I did was mostly an experiment, but from other anons' reviews it turned out to be somewhat successful - they reported that a fine-tune had higher-quality responses than the normal Turbo. Of course, to get good results from a fine-tune you need to have a high-quality dataset, for example using RP chats generated with GPT-4. This is really the same concept as fine-tuning smaller local models on GPT-4 output - Turbo can get "smarter" from seeing GPT-4 responses too.
 
 Some prerequisites:
-1) Python.
-2) An OpenAI key. Even trial ones will work, but then you need a small dataset and/or a small number of epochs to not go over the $5 credit limit.
+- Python.
+- An OpenAI key. Even trial ones will work, but then you need a small dataset and/or a small number of epochs to not go over the $5 credit limit.
 
 
 The dataset has to contain at least 10 chat example (user/assistant messages), meaning that in our case the dataset has to contain 10 example chats. I have a small test dataset that I've made myself.
@@ -38,10 +38,10 @@ So, once you have a more-or-less complete chat in SillyTavern, here's how you ma
 5) Paste the copied value into your JSON file.
 
 Once you do this for all the chats you want to fine-tune on, the main process is complete, but I highly recommend cleaning up and polishing your chat files:
-1) Make sure all of them have the same first system message (the main prompt for the AI).
-2) Merge multiple system messages into the first one.
-3) Remove any jailbreak (the ones that appear just before the user message) or empty system messages.
-4) **Use different names for different chats**. This can be done in SillyTavern itself by changing personas, or just with Find + Replace in the chat file itself. If all of your chats have the same user name, it might make the AI associate roleplaying with your name specifically or something, not sure. Do not forget to change the names in the system prompt if you copy the same one in all chats (from the 1st point).
+- Make sure all of them have the same first system message (the main prompt for the AI).
+- Merge multiple system messages into the first one.
+- Remove any jailbreak (the ones that appear just before the user message) or empty system messages.
+- **Use different names for different chats**. This can be done in SillyTavern itself by changing personas, or just with Find + Replace in the chat file itself. If all of your chats have the same user name, it might make the AI associate roleplaying with your name specifically or something, not sure. Do not forget to change the names in the system prompt if you copy the same one in all chats (from the 1st point).
 
 You can always refer to the `chats_example` folder if you want to try fine-tuning without collecting your own chat files, or just want to see an example of a bit of "polishing". I honestly don't know if I should include the RP prompt in the examples or not, this requires much more experimentation.
 
@@ -77,6 +77,7 @@ An important thing to note: not all frontends support specifying custom model na
 
 That should be all, enjoy using your fine-tune!
 
-
 Some notes:
-1) There's a `n_epochs` option in the config - it controls how many times the fine-tune will "show" the model your dataset. I think 20 should be a good option for small datasets, but if you have a bigger dataset, you might want to lower this value.
+- For more in-depth information on OAI fine-tuning, go and read https://platform.openai.com/docs/guides/fine-tuning/
+- There's a `n_epochs` option in the config - it controls how many times the fine-tune will "show" the model your dataset. I think 20 should be a good option for small datasets, but if you have a bigger dataset, you might want to lower this value.
+- Code is licensed under the WTFPL, the chats are generated with GPT-4 so I'm not sure if they can be licensed. Parts of `data_check.py` were taken from https://platform.openai.com/docs/guides/fine-tuning/check-data-formatting.
