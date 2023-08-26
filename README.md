@@ -24,7 +24,7 @@ cd turbo_ft
 pip install -r requirements.txt
 ```
 
-Then go to `modules/config.py` and change the OpenAI API key to a working one. 
+Then go to `modules/key.py` and change the OpenAI API key to your working one. 
 
 Then you have to collect enough (at least 10) chat examples. I'd recommend you to generate them with a high-quality model like GPT-4, because if you use output from a bad model, Turbo is not going to get better at RP.
 
